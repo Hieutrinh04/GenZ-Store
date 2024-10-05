@@ -1,0 +1,48 @@
+﻿@using WebBanDoDienTu.Models
+@model IEnumerable<BrandModel>
+
+@{
+    ViewData["Title"] = "Brand Listed"; // Thiết lập tiêu đề cho trang
+}
+
+<h3>@ViewData["Title"]</h3> <!-- Hiển thị tiêu đề trang -->
+<a asp-action="Create" asp-controller="Brand" class="btn btn-primary">Add Brand</a> <!-- Liên kết để thêm thương hiệu mới -->
+
+<table class="table table-bordered">
+    <!-- Tạo bảng có viền với Bootstrap -->
+    <thead>
+        <tr>
+            <th scope="col">#</th> <!-- Số thứ tự -->
+            <th scope="col">Brand Name</th> <!-- Tên thương hiệu -->
+            <th scope="col">Brand Description</th> <!-- Mô tả thương hiệu -->
+            <th scope="col">Brand Slug</th> <!-- Slug thương hiệu -->
+            <th scope="col">Brand Status</th> <!-- Trạng thái thương hiệu -->
+            <th scope="col">Actions</th> <!-- Hành động -->
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) // Lặp qua từng thương hiệu trong model
+        {
+            <tr>
+                <th scope="row">@item.Id</th> <!-- Hiển thị ID thương hiệu -->
+                <td>@item.Name</td> <!-- Hiển thị tên thương hiệu -->
+                <td>@item.Description</td> <!-- Hiển thị mô tả thương hiệu -->
+                <td>@item.Slug</td> <!-- Hiển thị slug thương hiệu -->
+                <td>
+                    @if (item.Status == 1)
+                    {
+                        <span class="text text-success">Hiển thị</span>
+                    }
+                    else
+                    {
+                        <span class="text text-danger">Ẩn</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" class="btn btn-warning btn-sm" asp-controller="Brand" asp-route-id="@item.Id">Edit</a> <!-- Liên kết để chỉnh sửa thương hiệu -->
+                    <a asp-action="Delete" class="btn btn-danger btn-sm confirmDeletion" asp-controller="Brand" asp-route-id="@item.Id" onclick="return confirm('Are you sure you want to delete this product?');">Delete</a> <!-- Liên kết để xóa thương hiệu kèm hộp thoại xác nhận -->
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
